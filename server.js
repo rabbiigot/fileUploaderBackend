@@ -87,16 +87,6 @@ app.get('/api/auth/status', (req, res) => {
   }
 });
 
-app.get('/api/checkAuth', (req, res) => {
-  const accessToken = req.cookies.access_token;
-
-  if (accessToken) {
-    res.json({ authenticated: true, token: accessToken });
-  } else {
-    res.status(401).json({ authenticated: false });
-  }
-});
-
 app.post('/api/upload', upload.single('file'), async (req, res) => {
     const authHeader = req.headers['authorization'];
   
