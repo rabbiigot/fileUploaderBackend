@@ -8,7 +8,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
-
+dotenv.config({path:'config.env'})
 const port = process.env.PORT || 7000;
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID, 
