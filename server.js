@@ -83,7 +83,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   
     const fileMetadata = {
       name: req.file.originalname,
-      parents: ['1W27E9eqwnafBFXFIFKY-4xfxUNpDFezc'], 
+      parents: ['1NBuL0EqpnWwX79odq5X6JOWHDMzvYEZT'], 
     };
   
     const media = {
