@@ -71,7 +71,7 @@ app.get('/auth/google/callback', async (req, res) => {
       sameSite: 'None'
     });
 
-    res.redirect(`${process.env.FRONTEND_URL}?authenticated=true&token=tokens.access_token`);
+    res.redirect(`${process.env.FRONTEND_URL}?authenticated=true&token=${tokens.access_token}`);
   } catch (error) {
     console.error('Error during OAuth callback:', error);
     res.status(500).send('Error during OAuth callback');
