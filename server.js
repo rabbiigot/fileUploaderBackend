@@ -87,6 +87,7 @@ app.get('/api/auth/status', (req, res) => {
   }
 });
 
+
 app.post('/api/upload', upload.single('file'), async (req, res) => {
     const authHeader = req.headers['authorization'];
   
