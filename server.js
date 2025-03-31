@@ -87,7 +87,7 @@ app.get('/api/auth/status', (req, res) => {
   }
 });
 
-app.get('/checkAuth', (req, res) => {
+app.get('/api/checkAuth', (req, res) => {
   const accessToken = req.cookies.access_token;
 
   if (accessToken) {
