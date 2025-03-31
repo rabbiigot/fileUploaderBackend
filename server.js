@@ -47,24 +47,37 @@ app.get('/auth/google', (req, res) => {
 });
 
 app.get('/auth/google/callback', async (req, res) => {
-    const code = req.query.code;
-    if (!code) {
-      return res.status(400).send('No code received from Google');
-    }
+  const code = req.query.code;
   
-    try {
-      const { tokens } = await oauth2Client.getToken(code);
-      oauth2Client.setCredentials(tokens);
-  
-      res.cookie('access_token', tokens.access_token);
-      res.cookie('refresh_token', tokens.refresh_token);
-  
-      res.redirect(`${process.env.FRONTEND_URL}?authenticated=true`); 
-    } catch (error) {
-      console.error('Error during OAuth callback:', error);
-      res.status(500).send('Error during OAuth callback');
-    }
+  if (!code) {
+    return res.status(400).send('No code received from Google');
+  }
+
+  try {
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);
+    
+    res.cookie('access_token', tokens.access_token, {
+      httpOnly: true,    
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 3600000,   
+      sameSite: 'None'   
+    });
+
+    res.cookie('refresh_token', tokens.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 365 * 24 * 60 * 60 * 1000,  
+      sameSite: 'None'
+    });
+
+    res.redirect(`${process.env.FRONTEND_URL}?authenticated=true`);
+  } catch (error) {
+    console.error('Error during OAuth callback:', error);
+    res.status(500).send('Error during OAuth callback');
+  }
 });
+
 
 app.get('/api/auth/status', (req, res) => {
   if (req.cookies.access_token) {
